@@ -44,89 +44,15 @@
 					<div class="col-lg-2">
 
 						<ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-							<li role="presentation" ng-class="{active:!parsed && importMode=='clipboard'}"><a href="#" ng-click="parsed=false;importMode='clipboard'"><i class="fa fa-clipboard breath-right"></i>Paste</a></li>
-				      <li role="presentation" ng-class="{active:!parsed && importMode=='file'}"><a href="#" ng-click="parsed=false;importMode='file'"><i class="fa fa-file-text breath-right"></i>Upload a file</a></li>
-				      <li role="presentation" ng-class="{active:!parsed && importMode=='url'}"><a href="#" ng-click="parsed=false;importMode='url'"><i class="fa fa-cloud breath-right"></i>From URL</a></li>
-							<li role="presentation" ng-class="{active:!parsed && importMode=='sample'}"><a href="#" ng-click="parsed=false;importMode='sample'"><i class="fa fa-gift breath-right"></i>Try our samples</a></li>
+							<li role="presentation" ng-class="{active:!parsed}"><a href="#" ng-click="parsed=false;importMode='sample'"><i class="fa fa-gift breath-right"></i>Available data</a></li>
 				    </ul>
 
 					</div>
 
 					<div class="col-lg-10">
 
-						<!-- Clipboard -->
-						<div ng-show="importMode=='clipboard' && !json && !parsed">
-							<textarea ui-codemirror="{lineWrapping : true,   dragDrop : false}" class="text-clipboard margin-bottom" ng-model="clipboardText" placeholder="Paste your data here from other applications"></textarea>
-							<p class="help-block">Copy and paste your data from other applications or websites. You can use tabular (TSV, CSV, DSV) or JSON data<p>
-
-						</div>
-
-						<!-- File -->
-						<div ng-show="importMode=='file'&& !json && !parsed">
-
-							<div ngf-drop ngf-select ng-model="files" class="drop-box margin-bottom" ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false" ng-show="!worksheets.length">
-								<a>Drag a file here or click to select a file from your computer</a>
-							</div>
-
-							<p ng-show="!worksheets.length" class="help-block">You can upload TSV, CSV, DSV, JSON and Excel files (.xls, .xlsx). Spreadsheet files with multiple sheets are fine too.</p>
-
-							<div class="row">
-								<div class="col-lg-3" ng-repeat="worksheet in worksheets" ng-click="parse(worksheet.text)">
-									<div class="layout">
-										<div class="layout-inner">
-											<span>{{worksheet.name}}</span>
-											<span class="text-muted layout-category">{{worksheet.rows}} rows</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<p ng-show="worksheets.length" class="help-block">Your file contains multiple sheets. Please choose one from above.</p>
-
-						</div>
-
-						<!-- URl -->
-						<div ng-show="importMode=='url' && !json && !parsed">
-							<input type="text" class="form-control margin-bottom" ng-model="url" placeholder="http://" ng-show="!worksheets.length"></input>
-							<p class="help-block">Enter a web address (URL) pointing to the data (e.g. a public Dropbox file, a public API, ...). Please, be sure the server is CORS-enabled.<p>
-
-							<div data-ng-show="loading" class="alert alert-loading"><i class="fa breath-right fa-refresh fa-spin"></i>Loading your data. Please wait.</div>
-
-							<div class="row">
-								<div class="col-lg-3" ng-repeat="worksheet in worksheets" ng-click="parse(worksheet.text)">
-									<div class="layout">
-										<div class="layout-inner">
-											<span>{{worksheet.name}}</span>
-											<span class="text-muted layout-category">{{worksheet.rows}} rows</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<p ng-show="worksheets.length" class="help-block">Your file contains multiple sheets. Please choose one from above.</p>
-
-						</div>
-
-						<!-- Default -->
-						<div ng-show="parsed">
-
-							<div data-ng-show="dataView != 'table'">
-								<div class="parsed">
-									<textarea ui-codemirror="codeMirrorOptions" ng-model="text"></textarea>
-								</div>
-							</div>
-
-							<div raw-table class="data-table" data-ng-show="dataView == 'table'"></div>
-
-
-						</div>
-
-						<div class="json-viewer margin-bottom" json-viewer json="json" ng-show="json" on-select="antani"></div>
-
-						<p ng-show="json" class="help-block">Please select the array <strong>[ ]</strong> containing the records you want to load from the JSON above.</p>
-
 						<!-- Sample -->
-						<div ng-show="importMode=='sample' && !parsed">
+						<div ng-show="!parsed">
 							<div class="row">
 								<div class="col-lg-3" ng-repeat="s in samples | orderBy : 'type'" ng-click="selectSample(s)">
 									<div class="layout">
